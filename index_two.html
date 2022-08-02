@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="js/echart.js"></script>
+    <script src="js/china.js"></script>
+    <script src="js/time.js"></script>
+    <!-- <script src="node_modules/echarts/dist/echarts.js"></script> -->
+
+</head>
+
+<body>
+    <!-- // 头部样式 -->
+    <div class="head">
+        <div class="left">
+            <button onclick="window.location.href=' html/map.html'">点击查看疫情热力图</button>
+        </div>
+        <div class="mid">
+            <h2>国内疫情大数据可视化</h2>
+        </div>
+        <div class="right">
+            <span>当前时间：<span id="timeSpan"></span></span>
+            <span class="exit" onclick="exitApi()">退出登录</span>
+        </div>
+    </div>
+    <!-- 主题部分 -->
+    <div class="body">
+        <div class="body_left">
+            <div>
+                <div id="main_line"></div>
+            </div>
+           <div>
+            <div id="pi"></div>
+           </div>
+        </div>
+        <div id="main"></div>
+        <div class="right_box">
+            <div class="top">
+                <div class="item-box">
+                    <span>新增确诊</span>
+                    <span>27844</span>
+                </div>
+                <div class="item-box">
+                    <span>新增无症状</span>
+                    <span>862</span>
+                </div>
+                <div class="item-box">
+                    <span>新增本土</span>
+                    <span>108</span>
+                </div>
+                <div class="item-box">
+                    <span>现有确诊</span>
+                    <span>4561626</span>
+                </div>
+                <div class="item-box">
+                    <span>现有本土</span>
+                    <span>1003</span>
+                </div>
+                <div class="item-box">
+                    <span>现有无症状</span>
+                    <span>4611</span>
+                </div>
+                <div class="item-box">
+                    <span>累计确诊</span>
+                    <span>4885768</span>
+                </div>
+                <div class="item-box">
+                    <span>累计至治愈</span>
+                    <span style="color: rgb(56, 241, 56);">301206</span>
+                </div>
+                <div class="item-box">
+                    <span>累计死亡</span>
+                    <span>22936</span>
+                </div>
+            </div>
+            <div class="bottom">
+                <img src="./img/pointMap.png" alt="">
+                <div class="button">
+                    <h3>疫情热力点图</h3>
+                    <button onclick="window.location.href='./html/pointMap.html'">点击查看全国热力点图</button>
+                    <button onclick="window.location.href='./html/map.html'">点击查看地方热力点图</button>
+                    <h3>密接关系图</h3>
+                    <button onclick="window.location.href='./html/guanxi.html'">点击查看密接关系图</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/newMap.js"></script>
+    <script src="./js/折线图.js"></script>
+    <script src="./js/pi.js"></script>
+    <script>
+        function exitApi() {
+            window.location.href = 'html/login.html'
+        }
+        console.log(getTime());
+        let $time = $("#timeSpan");
+        $time.text(getTime());
+        setInterval(() => {
+            $time.text(getTime())
+        }, 1000)
+    </script>
+
+</body>
+
+</html>

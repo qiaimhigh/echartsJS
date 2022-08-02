@@ -1,0 +1,37 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(2,9,51);
+}
+.head{
+    position: relative;
+    height: 50px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 50px;
+    background-color: rgb(14, 23, 77);
+    padding: 0 10px;
+  
+}
+.head .left button{
+    color: white;
+    height: 36px;
+    padding: 0 15px;
+    background: none;
+    border-radius: 4px;
+    border: 1px solid rgb(34, 55, 218);
+    /* border-image:  ; */
+}
+.head .left button:hover{
+    background-color: rgb(135, 154, 191);
+}
+.head .mid{
+    position: absolute;
+    left: 40%;
+    margin: 0 auto;
+}

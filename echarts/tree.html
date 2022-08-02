@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>树状图</title>
+    <script src="../js/jquery.js"></script>
+    <script src="../node_modules/echarts/dist/echarts.js"></script>
+</head>
+<style>
+    *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+    body{
+        background-color: rgb(17,34,50);
+    }
+    #main{
+        width: 96vw;
+        height: 90vh;
+        margin: 10px auto;
+        position: absolute;
+        top: 60px;
+    }
+    .header{
+        width: 100vw;
+        height: 40px;
+        margin: 0 auto;
+        background-color: rgb(28,43,67);
+        color: white;
+        border-bottom: 1px solid rgb(151, 149, 149);
+        position: fixed;
+        top: 0%;
+        z-index: 999;
+        line-height: 40px;
+        padding: 0 20px;
+        cursor: pointer;
+        text-shadow: 2px 2px 2px rgb(173, 171, 171);
+        justify-content: space-between;
+        display: flex;
+    }
+</style>
+<body>
+    <div class="header">
+        <span onclick="window.location.href='../index_two.html'">返回首页</span>
+        <span>退出登录</span>
+    </div>
+    
+    <div id="main"></div>
+    <script src="../js/tree.js"></script>
+</body>
+</html>

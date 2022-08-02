@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../js/jquery.js"></script>
+    <script src="../../node_modules/echarts/dist/echarts.js"></script>
+    <title>地图</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: rgb(2,9,51);
+        }
+        #main {
+            width: 60vw;
+            height: 100vh;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+        .tongji_box{
+            width: 40vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            right: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #circle {
+            width: 80%;
+            height: 40%;
+            position: absolute;
+            top: 5vh;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            border: 1px solid #cfcfcf;
+        }
+
+        #main_line{
+            width: 80%;
+            height: 40%;
+            position: absolute;
+            bottom: 5vh;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            border: 1px solid #cfcfcf;
+        }
+    </style>
+</head>
+
+<body onload="circleEvent()">
+    <div>
+        <div class="box">
+            <div id="main"></div>
+            <div class="tongji_box">
+                <div id="circle"></div>
+                <div id="main_line"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+       let names = decodeURIComponent(window.location.href.split('=')[1]);
+        let jsonUrl = `../../json/${names}.json`
+        let mapJson = [
+            {
+                name: names,
+                json: jsonUrl
+            }
+        ]
+    </script>
+    <script src="../../js/ee.js"></script>
+    <script src="../../js/jquery.js"></script>
+    
+</body>
+
+</html>

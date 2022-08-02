@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../node_modules/echarts/dist/echarts.js"></script>
+    <script src="../js/jquery.js"></script>
+    <title>Les</title>
+</head>
+
+<body>
+    <div id="main"></div>
+    <style>
+        #main {
+            width: 100vw;
+            height: 100vh;
+        }
+        canvas{
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+    </style>
+    <script>
+        let links = [];
+        let categories = [];
+        let map = new Map();
+        $.get("https://xiyoulvma.xyz/personmanage/relation_graph", (res) => {
+            let data = JSON.parse(res);
+            let JPerson = JSON.parse(data.person);
+            let JLinks = JSON.parse(data.link);
+            
+            JPerson.forEach((x,index)=>{
+                map.set(x.id,index)
+            })
+            // links
+            for (let i in JLinks) {
+                links.push({
+                    source: map.get(Number(i)) ,
+                    target: map.get(JSON.parse(data.link)[i]) 
+                })
+            }
+
+            nodes = JPerson ;
+
+            let set = new Set();
+            JPerson.forEach((x) => {
+                set.add(x.symbolSize)    
+            })
+            let newArr = [...set];
+            console.log(newArr);
+            newArr.forEach((x)=>{
+                categories.push({
+                    name: x 
+                })
+            })
+            console.log(nodes);
+            let set2 = new Set();
+            let set3 = new Set()
+            nodes.forEach((x)=>{
+                set2.add(x.x)
+                set3.add(x.y)
+            })
+            console.log(set2.size);
+            console.log(set3.size);
+            console.log(links);
+
+
+            var chartDom = document.getElementById('main');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            option = {
+                title: {
+                    text: '人物关系图',
+                    subtext: 'Default layout',
+                    top: 'bottom',
+                    left: 'right'
+                },
+                tooltip: {},
+                legend: [
+                    {
+                        // selectedMode: 'single',
+                        // data: graph.categories.map(function (a) {
+                        //     return a.name;
+                        // })
+                    }
+                ],
+                animationDuration: 1500,
+                animationEasingUpdate: 'quinticInOut',
+                series: [
+                    {
+                        name: '人物关系图',
+                        type: 'graph',
+                        layout: 'none',
+                        data: nodes,
+                        links: links,
+                        categories: categories,
+                        roam: true,
+                        label: {
+                            position: 'right',
+                            formatter: '{b}'
+                        },
+                        lineStyle: {
+                            color: 'source',
+                            curveness: 0.3
+                        },
+                        emphasis: {
+                            focus: 'adjacency',
+                            lineStyle: {
+                                width: 10
+                            }
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+
+            option && myChart.setOption(option);
+        })
+
+        // let nodes = [
+        //     {
+        //         id: 0,
+        //         name: '王睿',
+        //         value: '确诊病例',
+        //         category: 0,
+        //         symbolSize: 50,
+        //         x: 21.2,
+        //         y: 21.3,
+        //     },
+        //     {
+        //         id: 45,
+        //         name: '黎明',
+        //         value: '同乘一个地铁',
+        //         category: 1,
+        //         symbolSize: 50,
+        //         x: 21.5,
+        //         y: 21.5,
+        //     },
+        //     {
+        //         id: 12213,
+        //         name: '姜岚',
+        //         value: '同坐以恶搞',
+        //         category: 4,
+        //         symbolSize: 30,
+        //         x: 21.1232,
+        //         y: 21.1232,
+        //     },
+        //     {
+        //         id: 415,
+        //         name: '黄志远',
+        //         value: 8,
+        //         category: 4,
+        //         symbolSize: 40,
+        //         x: 21.4,
+        //         y: 21.5,
+        //     },
+        //     {
+        //         id: 1452,
+        //         name: '姚岚',
+        //         value: 20,
+        //         symbolSize: 22,
+        //         category: 4,
+        //         x: 21.6,
+        //         y: 21.6,
+        //     },{
+        //         id: 2131,
+        //         name: '蒋宇宁',
+        //         value: 8,
+        //         symbolSize: 20,
+        //         category: 5,
+        //         x: 21.8,
+        //         y: 21.8,
+        //     }
+        // ]
+        // let links = [
+        //     {
+        //         source: 2,
+        //         target: 0
+        //     }, {
+        //         source: 3,
+        //         target: 0
+        //     }, {
+        //         source: 4,
+        //         target: 0
+        //     }, {
+        //         source: 4,
+        //         target: 2
+        //     }, {
+        //         source: 3,
+        //         target: 0
+        //     },
+        //     {
+        //         source: 4,
+        //         target: 0
+        //     },
+        //     {
+        //         source: 5,
+        //         target: 3
+        //     },
+        //     {
+        //         source: 2,
+        //         target: 3
+        //     },
+        //     {
+        //         source: 3,
+        //         target: 2
+        //     },
+
+
+        // ]
+
+        // let categories = [
+        //     {
+        //         name: '王睿'
+        //     },
+        //     {
+        //         name: '黎明'
+        //     },
+        //     {
+        //         name: '姜岚'
+        //     },
+        //     {
+        //         name: '黄志远'
+        //     },
+        //     {
+        //         name: '姚岚'
+        //     },
+        //     {
+        //         name: '蒋宇宁'
+        //     }
+        // ]
+
+
+        // var chartDom = document.getElementById('main');
+        //     var myChart = echarts.init(chartDom);
+        //     var option;
+
+        //     option = {
+        //         title: {
+        //             text: 'Les Miserables',
+        //             subtext: 'Default layout',
+        //             top: 'bottom',
+        //             left: 'right'
+        //         },
+        //         tooltip: {},
+        //         legend: [
+        //             {
+        //                 // selectedMode: 'single',
+        //                 // data: graph.categories.map(function (a) {
+        //                 //     return a.name;
+        //                 // })
+        //             }
+        //         ],
+        //         animationDuration: 1500,
+        //         animationEasingUpdate: 'quinticInOut',
+        //         series: [
+        //             {
+        //                 name: '人物关系图',
+        //                 type: 'graph',
+        //                 layout: 'none',
+        //                 data: nodes,
+        //                 links: links,
+        //                 categories: categories,
+        //                 roam: true,
+        //                 label: {
+        //                     position: 'right',
+        //                     formatter: '{b}'
+        //                 },
+        //                 lineStyle: {
+        //                     color: 'source',
+        //                     curveness: 0.3
+        //                 },
+        //                 emphasis: {
+        //                     focus: 'adjacency',
+        //                     lineStyle: {
+        //                         width: 10
+        //                     }
+        //                 }
+        //             }
+        //         ]
+        //     };
+        //     myChart.setOption(option);
+
+        //     option && myChart.setOption(option);
+    </script>
+</body>
+
+</html>

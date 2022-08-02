@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度地图</title>
+    <script src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=RNj6jwv9wNUwFgwtGvgfXFEYjxNV7d23"
+        type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        }
+
+        #container {
+            height: 100vh;
+            width: 100vw;
+        }
+        .BMap_Marker{
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="../js/jquery.js"></script>
+    <script type="text/javascript">
+        console.log(window.location.href.split('=')[1]);
+        $.get("https://xiyoulvma.xyz/personmanage/scatterplot", { id: window.location.href.split('=')[1] }, (data, status) => {
+            var map = new BMapGL.Map("container");
+            // var point = new BMapGL.Point(116.404, 39.915);
+            var point = new BMapGL.Point(108.88, 34.13);
+            map.centerAndZoom(point, 15);
+            map.enableScrollWheelZoom(true);
+            var scaleCtrl = new BMapGL.ScaleControl();  // 添加比例尺控件
+            map.addControl(scaleCtrl);
+            var zoomCtrl = new BMapGL.ZoomControl();  // 添加缩放控件
+            map.addControl(zoomCtrl);
+            var cityCtrl = new BMapGL.CityListControl();  // 添加城市列表控件
+            map.addControl(cityCtrl);
+
+            console.log(data);
+            // let positionArr = [];
+            let temp = 0;
+            data.forEach(personList => {
+                // console.log(x.p_trip);
+                personList.p_trip.forEach((position,index) => {
+                    var point = new BMapGL.Point(position.x, position.y);
+                    // positionArr.push(point)
+                    var marker = new BMapGL.Marker(point);        // 创建标注   
+                    map.addOverlay(marker);
+                    var driving = new BMapGL.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+                    if( temp < personList.p_trip.length-1){
+                        driving.search(new BMapGL.Point(position.x, position.y), new BMapGL.Point(personList.p_trip[index+1].x, personList.p_trip[index+1].y)); 
+                        temp++;
+                    }                                        // 将标注添加到地图中
+                })
+
+
+
+                // var polyline = new BMapGL.Polyline([
+                //     new BMapGL.Point(116.399, 39.910),
+                //     new BMapGL.Point(116.405, 39.920),
+                //     new BMapGL.Point(116.425, 39.900)
+                // ], { strokeColor: "blue", strokeWeight: 3, strokeOpacity: 0.5 });
+                // map.addOverlay(polyline);
+            });
+            // console.log(positionArr);
+            // var polyline = new BMapGL.Polyline([...positionArr], { strokeColor: "blue", strokeWeight: 3, strokeOpacity: 0.5 });
+            // map.addOverlay(polyline);
+
+        })
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

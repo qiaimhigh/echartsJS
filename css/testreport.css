@@ -1,0 +1,31 @@
+body{
+    background-color: rgb(17,34,50);
+}
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+    width: 1000px;
+}
+
+table td,
+table th {
+    border: 1px solid #cad9ea;
+    color: #666;
+    height: 30px;
+}
+
+table thead th {
+    background-color: #CCE8EB;
+    width: 100px;
+}
+table tr:nth-child(5){
+    width: 400px;
+}
+table tr:nth-child(odd) {
+    background: rgb(91, 161, 222);
+}
+
+table tr:nth-child(even) {
+    background: #F5FAFA;
+}

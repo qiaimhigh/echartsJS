@@ -1,0 +1,65 @@
+{
+  "id": "3481695",
+  "name": "front",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7745332",
+      "name": "开心果",
+      "font_class": "kaixinguo",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "7745362",
+      "name": "核桃",
+      "font_class": "hetao",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "7745416",
+      "name": "夏威夷果",
+      "font_class": "xiaweiyiguo",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "7745627",
+      "name": "花生",
+      "font_class": "huasheng",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "7745628",
+      "name": "碧根果",
+      "font_class": "bigenguo",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "7745633",
+      "name": "葵花籽",
+      "font_class": "kuihuazi",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "7745636",
+      "name": "松子",
+      "font_class": "songzi",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "7745638",
+      "name": "西瓜籽",
+      "font_class": "xiguazi",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    }
+  ]
+}

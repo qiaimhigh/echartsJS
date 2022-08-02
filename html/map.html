@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/jquery.js"></script>
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/getscript?v=2.0&ak=RNj6jwv9wNUwFgwtGvgfXFEYjxNV7d23"></script>
+    <script src="../node_modules/echarts/dist/echarts.js"></script>
+    <script type="text/javascript" src="../node_modules/echarts/dist/extension/bmap.js"></script>
+    <title>百度热力图</title>
+    <style>
+        body{
+            background-color: rgb(2,9,51);
+        }
+        *{
+            padding: 0;
+            margin: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            top: 0;
+        }
+        /* ,.ec-extension-bmap  */
+        #main {
+            width: 100vw !important;
+            height: 90vh !important;
+            overflow: hidden !important;
+            position: absolute;
+            top: 50px;
+            margin: 0 auto;
+        }
+        .ec-extension-bmap {
+            height: 100% !important;
+            width: 100% !important;
+
+        }
+
+        .anchorBL {
+            display: none;
+        }
+
+        canvas {
+            overflow: hidden !important;
+        }
+
+        .header {
+            width: 98vw;
+            height: 40px;
+            background-color: rgb(14, 23, 77);
+            color: white;
+            border-bottom: 1px solid rgb(151, 149, 149);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            line-height: 40px;
+            /* padding-left:  20px; */
+            cursor: pointer;
+            text-shadow: 2px 2px 2px rgb(173, 171, 171);
+            justify-content: space-between;
+            display: flex;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+
+<body onload="mapEcharts()">
+    <div class="header">
+        <span onclick="window.location.href='../index_two.html'">返回首页</span>
+        <span>退出登录</span>
+    </div>
+    <div id="main"></div>
+    <script type="text/javascript">
+        // var ROOT_PATH =
+        //     'https://fastly.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+        // //初始化echarts，获得图表对象
+        // var echartsModal = echarts.init(document.getElementById('container'));
+        // var myChart = echarts.init(echartsModal);
+        // var option;
+        // $.get(ROOT_PATH + '/data/asset/data/hangzhou-tracks.json', function (data) {
+        //     var points = [].concat.apply(
+        //         [],
+        //         data.map(function (track) {
+        //             return track.map(function (seg) {
+        //                 return seg.coord.concat([1]);
+        //             }
+        //         );
+        //         })
+        //     );
+        //     myChart.setOption(option = {
+        //         animation: false,
+        //         bmap: {
+        //             center: [120.13066322374, 30.240018034923],
+        //             zoom: 14,
+        //             roam: true
+        //         },
+        //         visualMap: {//热力图的图例
+        //             show: false,
+        //             type: 'piecewise',//定义为分段型 visualMap，'continuous'为连续型 viusalMap
+        //             bottom: '30',
+        //             right: '20',
+        //             pieces: [ //自定义『分段式视觉映射组件（visualMapPiecewise）』的每一段的范围，以及每一段的文字，以及每一段的特别的样式
+        //                 { max: 0.1, label: '<10%' },
+        //                 { min: 0.1, max: 0.3, label: '>10%,<30%' },
+        //             ],
+        //             inverse: true, //是否反转 visualMap组件
+        //             itemWidth: 21, //图形的宽度，即长条的宽度。
+        //             itemHeight: 20, //图形的高度，即长条的高度。
+        //             align: "left",//指定组件中图形和文字的摆放位置
+        //             itemGap: 5,  //每两个图元之间的间隔距离
+        //             itemSymbol: "rect",
+        //             inRange: {
+        //                 color: ['rgba(131,180,255,0.2)', 'rgba(138,226,220,0.4)']
+        //             },
+        //             textStyle: {
+        //                 color: 'rgba(255,255,255,0.6)',
+        //                 fontSize: '10px',
+        //                 fontWeight: 500
+        //             },
+        //             backgroundColor: "rgba(53,61,127,0.9)",
+        //             padding: 20,
+        //         },
+        //         series: [{
+        //             type: 'heatmap',
+        //             coordinateSystem: 'bmap',//坐标系
+        //             data: points,
+        //             pointSize: 5,
+        //             blurSize: 6
+        //         }]
+        //     });
+
+        //     //添加百度地图插件bmp，获得地图对象，获取到的百度地图对象适用于所有的百度地图的接口。
+        //     var mapModal = echartsModal.getModel().getComponent('bmap').getBMap();
+        //     //设置地图的中心点和缩放级别
+        //     mapModal.addControl(new BMap.MapTypeControl());
+        //     // mapModal.centerAndZoom(new BMap.Point(120.13066322374, 30.240018034923), 13);
+
+        // var ROOT_PATH =
+        //     'https://fastly.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+        // var app = {};
+
+        // var chartDom = document.getElementById('main');
+        // var myChart = echarts.init(chartDom);
+        // var option;
+
+        // $.get(ROOT_PATH + '/data/asset/data/hangzhou-tracks.json', function (data) {
+        //     var points = [].concat.apply(
+        //         [],
+        //         data.map(function (track) {
+        //             return track.map(function (seg) {
+        //                 return seg.coord.concat([1]);
+        //             });
+        //         })
+        //     );
+        //     console.log(points);
+        //     myChart.setOption(
+        //         (option = {
+        //             animation: false,
+        //             bmap: {
+        //                 center: [120.13066322374, 30.240018034923],
+        //                 zoom: 14,
+        //                 roam: true
+        //             },
+        //             visualMap: {
+        //                 show: false,
+        //                 top: 'top',
+        //                 min: 0,
+        //                 max: 5,
+        //                 seriesIndex: 0,
+        //                 calculable: true,
+        //                 inRange: {
+        //                     color: ['blue', 'blue', 'green', 'yellow', 'red']
+        //                 }
+        //             },
+        //             series: [
+        //                 {
+        //                     type: 'heatmap',
+        //                     coordinateSystem: 'bmap',
+        //                     data: points,
+        //                     pointSize: 5,
+        //                     blurSize: 6
+        //                 }
+        //             ]
+        //         })
+        //     );
+        //     // 添加百度地图插件
+        //     var bmap = myChart.getModel().getComponent('bmap').getBMap();
+        //     bmap.addControl(new BMap.MapTypeControl());
+        // });
+
+        // option && myChart.setOption(option);
+    </script>
+
+    <script>
+        function mapEcharts() {
+            $(".anchorBL").css("width", "400px").css("height", "400px")
+            var ROOT_PATH =
+                'https://fastly.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+            var app = {};
+
+            var chartDom = document.getElementById('main');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            $.get(ROOT_PATH + '/data/asset/data/hangzhou-tracks.json', function (data) {
+                var points = [].concat.apply(
+                    [],
+                    data.map(function (track) {
+                        return track.map(function (seg) {
+                            return seg.coord.concat([1]);
+                        });
+                    })
+                );
+                myChart.setOption(
+                    (option = {
+                        animation: false,
+                        bmap: {
+                            center: [120.13066322374, 30.240018034923],
+                            zoom: 14,
+                            roam: true
+                        },
+                        visualMap: {
+                            show: false,
+                            top: 'top',
+                            min: 0,
+                            max: 5,
+                            seriesIndex: 0,
+                            calculable: true,
+                            inRange: {
+                                color: ['blue', 'blue', 'green', 'yellow', 'red']
+                            }
+                        },
+                        series: [
+                            {
+                                type: 'heatmap',
+                                coordinateSystem: 'bmap',
+                                data: points,
+                                pointSize: 5,
+                                blurSize: 5
+                            }
+                        ]
+                    })
+                );
+                // 添加百度地图插件
+                var bmap = myChart.getModel().getComponent('bmap').getBMap();
+                bmap.addControl(new BMap.MapTypeControl());
+                bmap.enableScrollWheelZoom(true);
+            });
+
+            option && myChart.setOption(option);
+        }
+
+    </script>
+
+</body>
+<!-- <body>
+    <div id="main"></div>
+
+    <script>
+        window.onload = () => {
+            var ROOT_PATH =
+                'https://fastly.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+            var app = {};
+
+            var chartDom = document.getElementById('main');
+            var myChart = echarts.init(chartDom);
+            var option;
+
+            $.get(ROOT_PATH + '/data/asset/data/hangzhou-tracks.json', function (data) {
+                var points = [].concat.apply(
+                    [],
+                    data.map(function (track) {
+                        return track.map(function (seg) {
+                            return seg.coord.concat([1]);
+                        });
+                    })
+                );
+                myChart.setOption(
+                    (option = {
+                        animation: false,
+                        bmap: {
+                            center: [120.13066322374, 30.240018034923],
+                            zoom: 14,
+                            roam: true
+                        },
+                        visualMap: {
+                            show: false,
+                            top: 'top',
+                            min: 0,
+                            max: 5,
+                            seriesIndex: 0,
+                            calculable: true,
+                            inRange: {
+                                color: ['blue', 'blue', 'green', 'yellow', 'red']
+                            }
+                        },
+                        series: [
+                            {
+                                type: 'heatmap',
+                                coordinateSystem: 'bmap',
+                                data: points,
+                                pointSize: 5,
+                                blurSize: 6
+                            }
+                        ]
+                    })
+                );
+                // 添加百度地图插件
+                var bmap = myChart.getModel().getComponent('bmap').getBMap();
+                bmap.addControl(new BMap.MapTypeControl());
+            });
+
+            option && myChart.setOption(option);
+
+        }
+    </script>
+</body> -->
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>辅导员页面</title>
+    <link rel="stylesheet" href="../../css/teaindex.css">
+    <script src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=RNj6jwv9wNUwFgwtGvgfXFEYjxNV7d23"
+        type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="//api.map.baidu.com/library/TrackAnimation/src/TrackAnimation_min.js"></script>
+
+</head>
+
+<body>
+    <div id="allmap"></div>
+    <style lang="">
+        #allmap {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+    <script src="../../js/jquery.js"></script>
+    <script type="text/javascript">
+        $.get("https://xiyoulvma.xyz/personmanage/scatterplot", { id: 805 }, (data, status) => {
+            let temp = 0;
+            let arr = [];
+            console.log(data);
+            data.forEach(personList => {
+                // console.log(x.p_trip);
+                personList.p_trip.forEach((position, index) => {
+                    arr.push({
+                        'lng': position.x,
+                        'lat': position.y
+                    })                                // 将标注添加到地图中
+                })
+            });
+            var bmap = new BMapGL.Map("allmap");                          // 创建Map实例
+            bmap.centerAndZoom(new BMapGL.Point(108.99, 34.14), 17);    // 初始化地图，设置中心点坐标和地图级别
+            bmap.enableScrollWheelZoom(true);
+            console.log(arr);
+            var path = arr;;
+            var point = [];
+            for (var i = 0; i < path.length; i++) {
+                point.push(new BMapGL.Point(path[i].lng, path[i].lat));
+            }
+            var pl = new BMapGL.Polyline(point);
+            var trackAni = new BMapGLLib.TrackAnimation(bmap, pl, {
+                overallView: true, // 动画完成后自动调整视野到总览
+                tilt: 30,          // 轨迹播放的角度，默认为55
+                duration: 200,   // 动画持续时长，默认为10000，单位ms
+                delay: 3        // 动画开始的延迟，默认0，单位ms
+            });
+            trackAni.start();
+        })
+
+        document.body.addEventListener('click', () => {
+            console.log('ads');
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        table {
+            width: 500px;
+            border: 1px solid gray;
+            border-collapse: collapse;
+        }
+
+        /*.top,.top th{border-bottom: none;}*/
+        th,
+        td {
+            line-height: 35px;
+            border: 1px solid gray;
+            text-align: center;
+            width: 120px;
+            border-left: none;
+        }
+
+        .scroll-box {
+            height: 195px;
+            width: 500px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tab-scroll {
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: all 1s;
+            border-top: none;
+        }
+
+        .tab-scroll td {
+            border-top: none;
+            border-left: none;
+        }
+    </style>
+    <script type="text/javascript">
+        /*
+            2.实现表格滚动(每次滚动一行)
+        */
+
+        window.onload = function () {
+            var scrollTab = document.getElementsByClassName('tab-scroll')[0];//滚动的表格
+            var tbody = scrollTab.getElementsByTagName('tbody')[0];//tbody
+
+            var speed = scrollTab.getElementsByTagName('td')[0].offsetHeight + 1;//行高(滚动速度)	 加上表格边框	
+            var count = 0;//要追加到表格底部的行索引 	
+            setInterval(scrollTop, 1500);//每隔1.5秒滚动一次
+
+
+            //实现表格向上滚动
+            function scrollTop() {
+                var t = scrollTab.offsetTop;//top值
+                scrollTab.style.top = t - speed + 'px';//滚动
+
+                var trs = tbody.getElementsByTagName('tr');//每次都重新取出所有内容行				
+                var newTr = trs[count].cloneNode(true);//复制行，得到新的行对象
+                //将滚动的行追加到表格底部
+                tbody.appendChild(newTr);
+                count++;
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <table class="top">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>年龄十分士大夫</th>
+                <th>住址</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="scroll-box">
+        <table class="tab-scroll">
+            <tbody>
+                <tr>
+                    <td>1001</td>
+                    <td>李的撒旦四</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1002</td>
+                    <td>王五</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1003</td>
+                    <td>王五</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1004</td>
+                    <td>Jack</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1005</td>
+                    <td>小兰</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1006</td>
+                    <td>王五</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1007</td>
+                    <td>王五</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1008</td>
+                    <td>Jack</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+                <tr>
+                    <td>1009</td>
+                    <td>小兰</td>
+                    <td>AAAA</td>
+                    <td>AAAA</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

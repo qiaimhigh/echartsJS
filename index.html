@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国内疫情大数据可视化</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/jquery.js"></script>
+    <script src="./js/scroll.js"></script>
+    <script src="./js/map.js"></script>
+    <script type="text/javascript"
+        src="http://api.map.baidu.com/getscript?v=2.0&ak=RNj6jwv9wNUwFgwtGvgfXFEYjxNV7d23"></script>
+    <script src="./node_modules/echarts/dist/echarts.js"></script>
+    <script type="text/javascript" src="./node_modules/echarts/dist/extension/bmap.js"></script>
+    <!-- // 滚动列表实现 -->
+     <script type="text/javascript"> 
+        /*
+            2.实现表格滚动(每次滚动一行)
+        */
+
+        window.onload = function () {
+            mapEcharts()
+            var scrollTab = $('.tab-scroll')[0];//滚动的表格
+            var tbody = scrollTab.getElementsByClassName('tbody1')[0];//tbody
+            var speed = scrollTab.getElementsByTagName('td')[0].offsetHeight + 2;//行高(滚动速度)	 加上表格边框
+            var count = 0;//要追加到表格底部的行索引 	
+
+            var scrollTab2 = document.getElementsByClassName('tab-scroll')[1];//滚动的表格
+            var tbody2 = scrollTab2.getElementsByClassName('tbody2')[0];//tbody
+            var speed2 = scrollTab2.getElementsByTagName('td')[0].offsetHeight + 2;//行高(滚动速度)	 加上表格边框	
+            var scrollTab3 = document.getElementsByClassName('tab-scroll')[2];//滚动的表格
+            var tbody3 = scrollTab3.getElementsByClassName('tbody3')[0];//tbody
+            var speed3 = scrollTab3.getElementsByTagName('td')[0].offsetHeight + 2;//行高(滚动速度)	 加上表格边框	
+            scrollTop(scrollTab,tbody,speed,count)
+            setInterval(()=>{
+                scrollTop(scrollTab,tbody,speed,count)
+                scrollTop(scrollTab2,tbody2,speed2,count)
+                scrollTop(scrollTab3,tbody3,speed3,count)
+                count++;
+            }, 1500);//每隔1.5秒滚动一次
+        };
+    </script>
+</head>
+
+<body>
+    <!-- // 头部样式 -->
+    <div class="head">
+        <div class="left">
+            <button>更新数据</button>
+        </div>
+        <div class="mid">
+            <h2>国内疫情大数据可视化</h2>
+        </div>
+        <div class="right">
+            <span>当前时间：2022年5月14日-16时2分6秒</span>
+        </div>
+    </div>
+    <!-- //主体部分 -->
+    <div class="body">
+        <!-- // 地图 -->
+        <div class="body_top">
+            <div class="data_top">
+                <div class="top">
+                    <div>1313213</div>
+                    <div>累计做核算人数</div>
+                </div>
+                <div class="top">
+                    <div>1313213</div>
+                    <div>累计做核算人数</div>
+                </div>
+                <div class="top">
+                    <div>1313213</div>
+                    <div>累计做核算人数</div>
+                </div>
+                <div class="top">
+                    <div>1313213</div>
+                    <div>累计做核算人数</div>
+                </div>
+            </div>
+            <div id="main"></div>
+        </div>
+        <!-- // 滚动列表 -->
+        <div class="io">
+             <div class="scorll_body">
+            <table class="top">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>年龄十分</th>
+                        <th>住址</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="scroll-box">
+                <table class="tab-scroll">
+                    <tbody class="tbody1">
+                        <tr>
+                            <td>1001</td>
+                            <td>李的撒旦四</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1002</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1003</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1004</td>
+                            <td>Jack</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1005</td>
+                            <td>小兰</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1006</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1007</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1008</td>
+                            <td>Jack</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1009</td>
+                            <td>小兰</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+       
+        <div class="scorll_body">
+            <table class="top">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>年龄十分士大夫</th>
+                        <th>住址</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="scroll-box">
+                <table class="tab-scroll">
+                    <tbody class="tbody2">
+                        <tr>
+                            <td>1001</td>
+                            <td>李的撒旦四</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1002</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1003</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1004</td>
+                            <td>Jack</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1005</td>
+                            <td>小兰</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1006</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1007</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1008</td>
+                            <td>Jack</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1009</td>
+                            <td>小兰</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="scorll_body">
+            <table class="top">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>年龄十分士大夫</th>
+                        <th>住址</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="scroll-box">
+                <table class="tab-scroll">
+                    <tbody class="tbody3">
+                        <tr>
+                            <td>1001</td>
+                            <td>李的撒旦四</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1002</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1003</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1004</td>
+                            <td>Jack</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1005</td>
+                            <td>小兰</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1006</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1007</td>
+                            <td>王五</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1008</td>
+                            <td>Jack</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                        <tr>
+                            <td>1009</td>
+                            <td>小兰</td>
+                            <td>AAAA</td>
+                            <td>AAAA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
